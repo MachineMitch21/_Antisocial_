@@ -10,6 +10,8 @@ Window::Window(const std::string title, int width, int height)
 {
 	if (!init())
 		glfwTerminate();
+
+	std::cout << "Everything initialized" << std::endl;
 }
 
 bool Window::IsClosed() {
