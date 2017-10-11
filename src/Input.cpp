@@ -15,6 +15,8 @@ Input::Input()
 {
     updateContext(glfwGetCurrentContext());
     LookSensitivity = 0.1f;
+
+    std::cout << "Initialized input object" << std::endl;
 }
 
 Input::~Input()
