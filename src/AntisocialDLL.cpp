@@ -23,12 +23,12 @@
             case DLL_PROCESS_DETACH:
             break;
             default:
-            if(logFile.is_open())
-            {
-                logFile << "DLLMain for antisocail was reached, but process was not attatched\n";
-            }
-
+                if(logFile.is_open())
+                {
+                    logFile << "DLLMain for antisocail was reached, but process was not attatched\n";
+                }
          }
+         
          logFile.close();
          return true;
     }
