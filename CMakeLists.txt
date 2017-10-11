@@ -19,5 +19,5 @@ target_link_libraries(${PROJECT_NAME} GLEW glfw3 GL X11 Xi Xrandr Xxf86vm Xinera
 endif (UNIX)
 
 if (WIN32)
-target_link_libraries(${PROJECT_NAME} glew32 glfw3dll opengl32 user32 kernel32)
+target_link_libraries(${PROJECT_NAME} glew32 glfw3 opengl32 user32 kernel32)
 endif (WIN32)
