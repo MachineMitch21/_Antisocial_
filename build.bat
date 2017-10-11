@@ -7,4 +7,4 @@ copy /y "libantisocial.dll.a" "C:/MinGW/lib/"
 
 @echo "Copied files"
 
-pause
+cd "../"
