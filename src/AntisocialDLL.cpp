@@ -12,7 +12,7 @@
                   {
                       logFile << "a process has attatched to antisocialDLL!\n";
                   }
-                  logFile.close();
+
             break;
             case DLL_THREAD_ATTACH:
 
@@ -22,7 +22,14 @@
             break;
             case DLL_PROCESS_DETACH:
             break;
+            default:
+            if(logFile.is_open())
+            {
+                logFile << "DLLMain for antisocail was reached, but process was not attatched\n";
+            }
+
          }
+         logFile.close();
          return true;
     }
 #endif // __WIN32__
