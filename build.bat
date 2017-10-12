@@ -8,7 +8,11 @@ cmake -G "MinGW Makefiles" ..
 copy /y "libantisocial.dll"   "../../AntisocialTest/build/"
 copy /y "libantisocial.dll.a" "C:/MinGW/lib/"
 
-@echo "Copied files"
+cd "../src"
+
+@echo "Copying header files to test project location"
+
+copy /y "*.h" "../../AntisocialTest/external"
 
 cd "../"
 
