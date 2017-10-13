@@ -6,7 +6,11 @@ using antisocial::Window;
 Window::Window(const std::string title, int width, int height)
 	: 	_title(title),
 		_width(width),
-		_height(height)
+		_height(height),
+		_originalWidth(_width),
+		_originalHeight(_height),
+		_minimized(false),
+		_isFullScreen(false)
 {
 	if (!init())
 		glfwTerminate();
@@ -79,6 +83,26 @@ void Window::enableVSYNC(bool enable) {
 	glfwSwapInterval(enable);
 }
 
+void Window::setFullScreen(bool doSet)
+{
+	GLFWvidmode* mode;
+	GLFWmonitor* primary;
+
+	primary = glfwGetPrimaryMonitor();
+	mode = (GLFWvidmode*)glfwGetVideoMode(primary);
+
+	if (doSet && !_isFullScreen)
+	{
+		glfwSetWindowMonitor(_window, primary, 0, 0, mode->width, mode->height, mode->refreshRate);
+		_isFullScreen = true;
+	}
+	else if (!doSet)
+	{
+		glfwSetWindowMonitor(_window, NULL, 200, 200, _originalWidth, _originalHeight, mode->refreshRate);
+		_isFullScreen = false;
+	}
+}
+
 void Window::update() {
 	glfwPollEvents();
 	glfwSwapBuffers(_window);
@@ -111,14 +135,6 @@ bool Window::init() {
 #ifdef __APPLE__
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 #endif
-
-	//TODO: Setup fullscreen to non-fullscreen modes...
-	//		For now the window will default to the width and height it was initialized with
-	GLFWvidmode* mode;
-	GLFWmonitor* primary;
-
-	primary = glfwGetPrimaryMonitor();
-	mode = (GLFWvidmode*)glfwGetVideoMode(primary);
 
 	_window = glfwCreateWindow(_width, _height, _title.c_str(), NULL, NULL);
 
