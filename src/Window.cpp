@@ -103,9 +103,14 @@ void Window::setFullScreen(bool doSet)
 	}
 }
 
+void Window::setResizable(bool resizable)
+{
+	glfwWindowHint(GLFW_RESIZABLE, resizable);
+}
+
 void Window::update() {
-	glfwPollEvents();
 	glfwSwapBuffers(_window);
+	glfwPollEvents();
 }
 
 void Window::clear(float r, float g, float b, float a) {
@@ -130,7 +135,8 @@ bool Window::init() {
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-	glfwWindowHint(GLFW_RESIZABLE, GL_TRUE);
+
+	setResizable(true);
 
 #ifdef __APPLE__
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);

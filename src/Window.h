@@ -31,6 +31,7 @@ namespace antisocial {
 
 		void enableVSYNC(bool enable);
 		void setFullScreen(bool doSet);
+		void setResizable(bool resizable);
 
 	private:
 		bool init();
