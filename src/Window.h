@@ -33,7 +33,6 @@ namespace antisocial {
 
 	private:
 		bool init();
-		friend void cursor_position_callback(GLFWwindow* window, double xpos, double ypos);
 		friend void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 		friend void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 		friend void window_iconify_callback(GLFWwindow* window, int iconified);
