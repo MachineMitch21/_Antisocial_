@@ -164,5 +164,5 @@ void antisocial::input::mouse_button_callback(GLFWwindow* window, int button, in
 
 void antisocial::input::cursor_movement_callback(GLFWwindow* window, double xpos, double ypos)
 {
-
+    
 }

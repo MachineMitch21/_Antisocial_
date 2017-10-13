@@ -10,8 +10,6 @@ Window::Window(const std::string title, int width, int height)
 {
 	if (!init())
 		glfwTerminate();
-
-	std::cout << "Everything initialized" << std::endl;
 }
 
 bool Window::IsClosed() {
@@ -20,14 +18,6 @@ bool Window::IsClosed() {
 
 void Window::close() {
 	glfwSetWindowShouldClose(_window, GL_TRUE);
-}
-
-double Window::getX() {
-	return _x;
-}
-
-double Window::getY() {
-	return _y;
 }
 
 int Window::getWidth() {
@@ -137,7 +127,10 @@ bool Window::init() {
 		isInitialized = false;
 	}
 
-	glfwMakeContextCurrent(_window);
+	if (_window != nullptr)
+	{
+		glfwMakeContextCurrent(_window);
+	}
 	glewExperimental = GL_TRUE;
 
 	status = glewInit();
@@ -147,16 +140,15 @@ bool Window::init() {
 		isInitialized = false;
 	}
 
-	glViewport(0, 0, _width, _height);
-
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LEQUAL);
 
 	glfwGetFramebufferSize(_window, &_width, &_height);
+	glViewport(0, 0, _width, _height);
+
 	glfwSetWindowUserPointer(_window, this);
 
 	glfwSetFramebufferSizeCallback(_window, framebuffer_size_callback);
-	glfwSetCursorPosCallback(_window, cursor_position_callback);
 	glfwSetScrollCallback(_window, scroll_callback);
 	glfwSetWindowIconifyCallback(_window, window_iconify_callback);
 	glfwSetErrorCallback(error_callback);
@@ -170,12 +162,6 @@ void antisocial::framebuffer_size_callback(GLFWwindow* window, int width, int he
 	win->_width = width;
 	win->_height = height;
 	glViewport(0, 0, width, height);
-}
-
-void antisocial::cursor_position_callback(GLFWwindow* window, double xpos, double ypos) {
-	Window* win = (Window*)glfwGetWindowUserPointer(window);
-	win->_x = xpos;
-	win->_y = ypos;
 }
 
 void antisocial::scroll_callback(GLFWwindow* window, double xoffset, double yoffset) {
