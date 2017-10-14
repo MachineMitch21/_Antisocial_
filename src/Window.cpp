@@ -96,7 +96,7 @@ void Window::setFullScreen(bool doSet)
 		glfwSetWindowMonitor(_window, primary, 0, 0, mode->width, mode->height, mode->refreshRate);
 		_isFullScreen = true;
 	}
-	else if (!doSet)
+	else if (!doSet && _isFullScreen)
 	{
 		glfwSetWindowMonitor(_window, NULL, 200, 200, _originalWidth, _originalHeight, mode->refreshRate);
 		_isFullScreen = false;
@@ -116,11 +116,6 @@ void Window::update() {
 void Window::clear(float r, float g, float b, float a) {
 	glClearColor(r, g, b, a);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-}
-
-Window::~Window()
-{
-	glfwTerminate();
 }
 
 bool Window::init() {
@@ -176,6 +171,11 @@ bool Window::init() {
 	glfwSetErrorCallback(error_callback);
 
 	return isInitialized;
+}
+
+Window::~Window()
+{
+	glfwTerminate();
 }
 
 //Callback functions
