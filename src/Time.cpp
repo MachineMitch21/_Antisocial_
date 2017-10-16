@@ -16,3 +16,8 @@ float Time::DeltaTime()
 {
     return _deltaTime;
 }
+
+float Time::LastFrame()
+{
+    return _lastFrame;
+}
