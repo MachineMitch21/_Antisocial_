@@ -22,26 +22,29 @@ Window::Window(const std::string title, int width, int height)
 * IsClosed is called at the start of each frame making it an acceptable	*
 * candidate for updating Time variables									*
 ************************************************************************/
-bool Window::IsClosed() {
-	Time::_elapsedTime 	= glfwGetTime();
-	Time::_deltaTime 	= Time::_elapsedTime - Time::_lastFrame;
-	Time::_lastFrame	= Time::_elapsedTime;
+bool Window::IsClosed()
+{
+	Time::update_time();
 	return glfwWindowShouldClose(_window);
 }
 
-void Window::close() {
+void Window::close()
+{
 	glfwSetWindowShouldClose(_window, GL_TRUE);
 }
 
-int Window::getWidth() {
+int Window::getWidth()
+{
 	return _width;
 }
 
-int Window::getHeight() {
+int Window::getHeight()
+{
 	return _height;
 }
 
-void Window::setCursor(bool show) {
+void Window::setCursor(bool show)
+{
 	if (!show) {
 		glfwSetInputMode(_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 		_cursorActive = false;
@@ -53,7 +56,8 @@ void Window::setCursor(bool show) {
 	}
 }
 
-void Window::setIcon(const std::string path) {
+void Window::setIcon(const std::string path)
+{
 
 #ifndef __APPLE__
 	if (path != "") {
@@ -80,15 +84,18 @@ void Window::setIcon(const std::string path) {
 #endif // __APPLE__
 }
 
-bool Window::isCursorActive() {
+bool Window::isCursorActive()
+{
 	return _cursorActive;
 }
 
-bool Window::isMinimized() {
+bool Window::isMinimized()
+{
 	return _minimized;
 }
 
-void Window::enableVSYNC(bool enable) {
+void Window::enableVSYNC(bool enable)
+{
 	glfwSwapInterval(enable);
 }
 
@@ -117,17 +124,20 @@ void Window::setResizable(bool resizable)
 	glfwWindowHint(GLFW_RESIZABLE, resizable);
 }
 
-void Window::update() {
+void Window::update()
+{
 	glfwSwapBuffers(_window);
 	glfwPollEvents();
 }
 
-void Window::clear(float r, float g, float b, float a) {
+void Window::clear(float r, float g, float b, float a)
+{
 	glClearColor(r, g, b, a);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
-bool Window::init() {
+bool Window::init()
+{
 
 	bool isInitialized = true;
 	GLenum status;
@@ -148,7 +158,8 @@ bool Window::init() {
 
 	_window = glfwCreateWindow(_width, _height, _title.c_str(), NULL, NULL);
 
-	if (_window == nullptr) {
+	if (_window == nullptr)
+	{
 		std::cerr << "Failed to create GLFW window!" << std::endl;
 		isInitialized = false;
 	}
@@ -188,24 +199,28 @@ Window::~Window()
 }
 
 //Callback functions
-void antisocial::framebuffer_size_callback(GLFWwindow* window, int width, int height) {
+void antisocial::framebuffer_size_callback(GLFWwindow* window, int width, int height)
+{
 	Window* win = (Window*)glfwGetWindowUserPointer(window);
 	win->_width = width;
 	win->_height = height;
 	glViewport(0, 0, width, height);
 }
 
-void antisocial::scroll_callback(GLFWwindow* window, double xoffset, double yoffset) {
+void antisocial::scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
+{
 	Window* win = (Window*)glfwGetWindowUserPointer(window);
 }
 
-void antisocial::window_iconify_callback(GLFWwindow* window, int iconified) {
+void antisocial::window_iconify_callback(GLFWwindow* window, int iconified)
+{
 	Window* win = (Window*)glfwGetWindowUserPointer(window);
 
 	win->_minimized = iconified;
 }
 
-void antisocial::error_callback(int error, const char* description) {
+void antisocial::error_callback(int error, const char* description)
+{
 	//TODO: Create a logging system that can log these errors for future reference
 	std::cerr << "ERROR::(" << error << ")::\n" << description << std::endl;
 }

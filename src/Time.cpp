@@ -21,3 +21,10 @@ float Time::LastFrame()
 {
     return _lastFrame;
 }
+
+void Time::update_time()
+{
+    Time::_elapsedTime 	= glfwGetTime();
+    Time::_deltaTime 	= Time::_elapsedTime - Time::_lastFrame;
+    Time::_lastFrame	= Time::_elapsedTime;
+}
