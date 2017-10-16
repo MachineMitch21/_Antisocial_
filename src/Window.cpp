@@ -16,7 +16,16 @@ Window::Window(const std::string title, int width, int height)
 		glfwTerminate();
 }
 
+/************************************************************************
+* The Window class is defined as a friend class of Time in Time.h		*
+* Giving it access to these private members								*
+* IsClosed is called at the start of each frame making it an acceptable	*
+* candidate for updating Time variables									*
+************************************************************************/
 bool Window::IsClosed() {
+	Time::_elapsedTime 	= glfwGetTime();
+	Time::_deltaTime 	= Time::_elapsedTime - Time::_lastFrame;
+	Time::_lastFrame	= Time::_elapsedTime;
 	return glfwWindowShouldClose(_window);
 }
 
