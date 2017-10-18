@@ -37,7 +37,7 @@ Vector2f Vector2f::subtract(const Vector2f& v)
     return Vector2f(x - v.x, y - v.y);
 }
 
-Vector2f Vector2f::operator*(const Vector2f& v)
+float Vector2f::operator*(const Vector2f& v)
 {
     return dot(v);
 }
