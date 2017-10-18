@@ -23,13 +23,13 @@ namespace antisocial
 
             float magnitude();
             float dot(const Vector3f& v);
-            Vector3f& cross(const Vector3f& v);
-            Vector3f& add(const Vector3f& v);
-            Vector3f& subtract(const Vector3f& v);
+            Vector3f cross(const Vector3f& v);
+            Vector3f add(const Vector3f& v);
+            Vector3f subtract(const Vector3f& v);
 
             float operator*(const Vector3f& v);
-            Vector3f& operator+(const Vector3f& v);
-            Vector3f& operator-(const Vector3f& v);
+            Vector3f operator+(const Vector3f& v);
+            Vector3f operator-(const Vector3f& v);
 
             friend std::ostream& operator<<(std::ostream& os, const Vector3f& v)
             {
