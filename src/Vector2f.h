@@ -1,6 +1,6 @@
 
-#ifndef VECTOR2_H
-#define VECTOR2_H
+#ifndef VECTOR2F_H
+#define VECTOR2F_H
 
 #include "AntisocialDLL.h"
 
@@ -23,16 +23,16 @@ namespace antisocial
 
             float magnitude();
             float dot(const Vector2f& v);
-            Vector2f add(const Vector2f& v);
-            Vector2f subtract(const Vector2f& v);
+            Vector2f& add(const Vector2f& v);
+            Vector2f& subtract(const Vector2f& v);
 
             float operator*(const Vector2f& v);
-            Vector2f operator+(const Vector2f& v);
-            Vector2f operator-(const Vector2f& v);
+            Vector2f& operator+(const Vector2f& v);
+            Vector2f& operator-(const Vector2f& v);
 
             friend std::ostream& operator<<(std::ostream& os, const Vector2f& v)
             {
-                return os << "(" << v.x << ", " << v.y << ")";
+                return os << toString();
             }
 
             std::string toString()
@@ -46,4 +46,4 @@ namespace antisocial
     }
 }
 
-#endif // VECTOR2_H
+#endif // VECTOR2F_H
