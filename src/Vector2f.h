@@ -5,6 +5,7 @@
 #include "AntisocialDLL.h"
 
 #include <iostream>
+#include <math.h>
 #include <string>
 
 namespace antisocial

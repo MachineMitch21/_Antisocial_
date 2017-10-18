@@ -1,8 +1,6 @@
 
 #include "Vector2f.h"
 
-#include <math.h>
-
 using antisocial::math::Vector2f;
 
 Vector2f::Vector2f(float x, float y)
