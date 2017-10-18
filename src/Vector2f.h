@@ -4,6 +4,7 @@
 
 #include "AntisocialDLL.h"
 
+#include <iostream>
 #include <string>
 
 namespace antisocial
@@ -21,15 +22,15 @@ namespace antisocial
             ~Vector2f();
 
             float magnitude();
-            float dot_product(const Vector2f& v);
-            Vector2f add(const Vector2f v);
+            float dot(const Vector2f& v);
+            Vector2f add(const Vector2f& v);
             Vector2f subtract(const Vector2f& v);
 
             float operator*(const Vector2f& v);
             Vector2f operator+(const Vector2f& v);
             Vector2f operator-(const Vector2f& v);
 
-            friend ostream& operator<<(ostream& os, const Vector2f& v)
+            friend std::ostream& operator<<(std::ostream& os, const Vector2f& v)
             {
                 return os << "(" << v.x << ", " << v.y << ")";
             }
@@ -40,7 +41,7 @@ namespace antisocial
             }
 
         public:
-            float x, float y;
+            float x, y;
         };
     }
 }
