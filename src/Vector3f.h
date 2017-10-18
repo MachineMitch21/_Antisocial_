@@ -33,7 +33,7 @@ namespace antisocial
 
             friend std::ostream& operator<<(std::ostream& os, const Vector3f& v)
             {
-                return os << toString();
+                return os << "(" << v.x << ", " << v.y << ", " << v.z << ")";
             }
 
             std::string toString()
