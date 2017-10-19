@@ -12,6 +12,7 @@ Window::Window(const std::string title, int width, int height)
 		_minimized(false),
 		_isFullScreen(false)
 {
+	//If glfw fails to initialize glfwTerminate will release any resources.
 	if (!init())
 		glfwTerminate();
 }
@@ -64,7 +65,7 @@ void Window::setIcon(const std::string path)
 		int width, height, numComponents;
 
 		GLFWimage icon[1];
-
+		//Loads pixel data from file into GLFWimage structure
 		icon[0].pixels = stbi_load(path.c_str(), &width, &height, &numComponents, 4);
 
 		if (icon[0].pixels == NULL) {
@@ -146,6 +147,7 @@ bool Window::init()
 
 	std::cout << "Using GLFW VERSION: " << glfwGetVersionString() << std::endl;
 
+	//specifies GLFW client API VERSION
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
