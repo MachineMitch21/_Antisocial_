@@ -23,9 +23,12 @@ Mesh::Mesh(const std::vector<glm::vec3>& vertices, const std::vector<glm::vec3>&
 
 void Mesh::draw()
 {
-    glBindVertexArray(_vao);
-    glDrawArrays(GL_TRIANGLES, 0, _vertices.size());
-    glBindVertexArray(0);
+    if (_vertices.size() > 0)
+    {
+        glBindVertexArray(_vao);
+        glDrawArrays(GL_TRIANGLES, 0, _vertices.size());
+        glBindVertexArray(0);
+    }
 }
 
 void Mesh::setVertices(const std::vector<glm::vec3>& newVertices)
