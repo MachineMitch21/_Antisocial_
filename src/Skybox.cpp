@@ -11,12 +11,14 @@ Skybox::Skybox(std::string front, std::string back, std::string top, std::string
 
     glEnable(GL_TEXTURE_CUBE_MAP_SEAMLESS);
 
+    glBindTexture(GL_TEXTURE_CUBE_MAP, _cubeMapHandle);
     loadSideTexture(CUBE_MAP_FRONT, front);
     loadSideTexture(CUBE_MAP_BACK, back);
     loadSideTexture(CUBE_MAP_RIGHT, right);
     loadSideTexture(CUBE_MAP_LEFT, left);
     loadSideTexture(CUBE_MAP_TOP, top);
     loadSideTexture(CUBE_MAP_BOTTOM, bottom);
+    glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
 
     glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -70,12 +72,11 @@ Skybox::Skybox(std::string front, std::string back, std::string top, std::string
 Skybox::~Skybox()
 {
     delete _cubeMesh;
+    glDeleteTextures(1, &_cubeMapHandle);
 }
 
 bool Skybox::loadSideTexture(GLenum side, std::string file)
 {
-    glBindTexture(GL_TEXTURE_CUBE_MAP, _cubeMapHandle);
-
     int force_channels = 4;
     unsigned char* data;
     int x, y, n;
