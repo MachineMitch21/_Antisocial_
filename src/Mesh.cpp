@@ -8,7 +8,6 @@ Mesh::Mesh()
 {
     glGenVertexArrays(1, &_vao);
     init_vbo_map();
-    glBindVertexArray(0);
 }
 
 Mesh::Mesh(const std::vector<glm::vec3>& vertices, const std::vector<glm::vec3>& normals, const std::vector<glm::vec2>& uvs)
