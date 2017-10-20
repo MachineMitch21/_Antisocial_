@@ -43,9 +43,24 @@ Vector3f Vector3f::subtract(const Vector3f& v)
     return Vector3f(x - v.x, y - v.y, z - v.z);
 }
 
+Vector3f Vector3f::scale(float scalar)
+{
+    return Vector3f(x * scalar, y * scalar, z * scalar);
+}
+
+Vector3f Vector3f::Lerp(Vector3f v1, Vector3f v2, float t)
+{
+    return v1 * t + v2 * (1.0f - t);
+}
+
 float Vector3f::operator*(const Vector3f& v)
 {
     return dot(v);
+}
+
+Vector3f Vector3f::operator*(float scalar)
+{
+    return scale(scalar);
 }
 
 Vector3f Vector3f::operator+(const Vector3f& v)
