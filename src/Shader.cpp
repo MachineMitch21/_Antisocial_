@@ -95,6 +95,7 @@ bool Shader::linkProgram() {
 		glAttachShader(_handle, it->second);
 	}
 
+
 	glBindAttribLocation(_handle, 0, "Pos");
 	glBindAttribLocation(_handle, 1, "Color");
 	glBindAttribLocation(_handle, 2, "TexCoord");
@@ -127,9 +128,11 @@ GLuint Shader::compile_shader(const std::string& shader_src, GLenum shader_type)
 	src[0] = shader_src.c_str();
 	src_length[0] = shader_src.length();
 
-	//Create the shader and compile it
+	//Create empty shader object of specified type
 	shader = glCreateShader(shader_type);
+	//Moves shader source code into shader object location
 	glShaderSource(shader, 1, src, src_length);
+	//Compiles source code into shader object
 	glCompileShader(shader);
 
 	//Check for compilation errors
