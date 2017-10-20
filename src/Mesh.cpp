@@ -10,7 +10,7 @@ Mesh::Mesh()
     init_vbo_map();
 }
 
-Mesh::Mesh(const std::vector<glm::vec3>& vertices, const std::vector<glm::vec3>& normals, const std::vector<glm::vec2>& uvs)
+Mesh::Mesh(const std::vector<glm::vec3> vertices, const std::vector<glm::vec3> normals, const std::vector<glm::vec2> uvs)
     :   Drawable()
 {
     glGenVertexArrays(1, &_vao);
@@ -30,7 +30,7 @@ void Mesh::draw()
     }
 }
 
-void Mesh::setVertices(const std::vector<glm::vec3>& newVertices)
+void Mesh::setVertices(const std::vector<glm::vec3> newVertices)
 {
     _vertices = newVertices;
 
@@ -41,7 +41,7 @@ void Mesh::setVertices(const std::vector<glm::vec3>& newVertices)
     glVertexAttribPointer(VERTICES, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
 }
 
-void Mesh::setNormals(const std::vector<glm::vec3>& newNormals)
+void Mesh::setNormals(const std::vector<glm::vec3> newNormals)
 {
     _normals = newNormals;
 
@@ -52,7 +52,7 @@ void Mesh::setNormals(const std::vector<glm::vec3>& newNormals)
     glVertexAttribPointer(NORMALS, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
 }
 
-void Mesh::setUVs(const std::vector<glm::vec2>& newUVs)
+void Mesh::setUVs(const std::vector<glm::vec2> newUVs)
 {
     _uvs = newUVs;
 

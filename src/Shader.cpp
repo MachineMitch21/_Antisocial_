@@ -96,7 +96,7 @@ bool Shader::linkProgram() {
 	}
 
 	glBindAttribLocation(_handle, 0, "Pos");
-	glBindAttribLocation(_handle, 1, "Color");
+	glBindAttribLocation(_handle, 1, "Normal");
 	glBindAttribLocation(_handle, 2, "TexCoord");
 
 	glLinkProgram(_handle);
