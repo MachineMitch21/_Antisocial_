@@ -7,9 +7,12 @@ using antisocial::Texture2D;
 
 Texture2D::Texture2D(const std::string& texturePath)
 {
+	//Allocates space for texture and stores handle in _handle
 	glGenTextures(1, &_handle);
+	//Sets _handle to current GL texture
 	glBindTexture(GL_TEXTURE_2D, _handle);
 
+	//Set texture parameters
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
