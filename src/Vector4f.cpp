@@ -51,3 +51,22 @@ Vector4f Vector4f::operator-(const Vector4f& v)
 {
     return subtract(v);
 }
+
+Vector4f& Vector4f::operator+=(const Vector4f& v)
+{
+    this->x += v.x;
+    this->y += v.y;
+    this->z += v.z;
+    this->w += v.w;
+    return *this;
+}
+
+bool Vector4f::operator==(const Vector4f& v)
+{
+    if(this->x == v.x && this->y == v.y && this->z == v.z && this->w == v.w)
+    {
+        return true;
+    }else{
+        return false;
+    }
+}
