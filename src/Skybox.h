@@ -5,13 +5,17 @@
 #include "Mesh.h"
 #include "Drawable.h"
 #include "stb_image.h"
+#include "ModelLoader.h"
+#include "Skybox.h"
 
 #include <GL/glew.h>
 #include <string>
 #include <iostream>
+#include <vector>
 
 using antisocial::Mesh;
 using antisocial::Drawable;
+using antisocial::ModelLoader;
 
 #define CUBE_MAP_FRONT   GL_TEXTURE_CUBE_MAP_NEGATIVE_Z
 #define CUBE_MAP_BACK    GL_TEXTURE_CUBE_MAP_POSITIVE_Z
@@ -40,6 +44,8 @@ namespace antisocial
 
     private:
         GLuint _cubeMapHandle;
+        GLuint _vao;
+        GLuint _vbo;
         Mesh* _cubeMesh;
     };
 

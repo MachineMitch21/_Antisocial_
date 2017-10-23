@@ -4,7 +4,8 @@
 using antisocial::Skybox;
 
 Skybox::Skybox(std::string front, std::string back, std::string top, std::string bottom, std::string right, std::string left)
-    :   _cubeMesh(new Mesh())
+    :   Drawable(),
+        _cubeMesh(ModelLoader::loadObj("../Data/Models/cube.obj"))
 {
     glActiveTexture(GL_TEXTURE0);
     glGenTextures(1, &_cubeMapHandle);
@@ -18,55 +19,12 @@ Skybox::Skybox(std::string front, std::string back, std::string top, std::string
     loadSideTexture(CUBE_MAP_LEFT, left);
     loadSideTexture(CUBE_MAP_TOP, top);
     loadSideTexture(CUBE_MAP_BOTTOM, bottom);
-    glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
 
     glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE); 
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
     glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
     glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-
-    std::vector<glm::vec3> skyboxVertices =
-    {
-        glm::vec3(-1.0f,  1.0f, -1.0f),
-        glm::vec3(-1.0f, -1.0f, -1.0f),
-        glm::vec3( 1.0f, -1.0f, -1.0f),
-        glm::vec3( 1.0f, -1.0f, -1.0f),
-        glm::vec3( 1.0f,  1.0f, -1.0f),
-        glm::vec3(-1.0f,  1.0f, -1.0f),
-        glm::vec3(-1.0f, -1.0f,  1.0f),
-        glm::vec3(-1.0f, -1.0f, -1.0f),
-        glm::vec3(-1.0f,  1.0f, -1.0f),
-        glm::vec3(-1.0f,  1.0f, -1.0f),
-        glm::vec3(-1.0f,  1.0f,  1.0f),
-        glm::vec3(-1.0f, -1.0f,  1.0f),
-        glm::vec3( 1.0f, -1.0f, -1.0f),
-        glm::vec3( 1.0f, -1.0f,  1.0f),
-        glm::vec3( 1.0f,  1.0f,  1.0f),
-        glm::vec3( 1.0f,  1.0f,  1.0f),
-        glm::vec3( 1.0f,  1.0f, -1.0f),
-        glm::vec3( 1.0f, -1.0f, -1.0f),
-        glm::vec3(-1.0f, -1.0f,  1.0f),
-        glm::vec3(-1.0f,  1.0f,  1.0f),
-        glm::vec3( 1.0f,  1.0f,  1.0f),
-        glm::vec3( 1.0f,  1.0f,  1.0f),
-        glm::vec3( 1.0f, -1.0f,  1.0f),
-        glm::vec3(-1.0f, -1.0f,  1.0f),
-        glm::vec3(-1.0f,  1.0f, -1.0f),
-        glm::vec3(-1.0f,  1.0f,  1.0f),
-        glm::vec3( 1.0f,  1.0f,  1.0f),
-        glm::vec3( 1.0f,  1.0f,  1.0f),
-        glm::vec3( 1.0f,  1.0f, -1.0f),
-        glm::vec3(-1.0f,  1.0f, -1.0f),
-        glm::vec3( 1.0f, -1.0f, -1.0f),
-        glm::vec3( 1.0f, -1.0f,  1.0f),
-        glm::vec3(-1.0f, -1.0f,  1.0f),
-        glm::vec3(-1.0f, -1.0f, -1.0f),
-        glm::vec3( 1.0f, -1.0f, -1.0f),
-        glm::vec3(-1.0f, -1.0f,  1.0f)
-    };
-
-    _cubeMesh->setVertices(skyboxVertices);
 }
 
 Skybox::~Skybox()
@@ -84,7 +42,7 @@ bool Skybox::loadSideTexture(GLenum side, std::string file)
 
     if (data == NULL)
     {
-        std::cerr << "ERROR: could not load image file (" << file << ")" << std::endl;
+        std::cerr << "ERROR: could not load image file for SKYBOX (" << file << ")" << std::endl;
         return false;
     }
 
@@ -99,6 +57,9 @@ void Skybox::draw()
     glDepthMask(GL_FALSE);
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_CUBE_MAP, _cubeMapHandle);
-    _cubeMesh->draw();
+    if (_cubeMesh)
+    {
+        _cubeMesh->draw();
+    }
     glDepthMask(GL_TRUE);
 }
