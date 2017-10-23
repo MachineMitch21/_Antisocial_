@@ -43,7 +43,6 @@ namespace antisocial
         bool loadSideTexture(GLenum side, std::string file);
 
     private:
-        std::vector<float> _skyboxVertices;
         GLuint _cubeMapHandle;
         GLuint _vao;
         GLuint _vbo;
