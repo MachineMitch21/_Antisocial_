@@ -34,7 +34,7 @@
                     logFile << "DLLMain for antisocail was reached, but process was not attatched\n";
                 }
          }
-         
+
          logFile.close();
          return true;
     }

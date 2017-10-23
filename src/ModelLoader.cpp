@@ -13,25 +13,24 @@ ModelLoader::~ModelLoader()
 
 }
 
-bool ModelLoader::loadObj(
-	const std::string& path,
-	std::vector<glm::vec3> & out_vertices,
-    std::vector<glm::vec3> & out_normals,
-	std::vector<glm::vec2> & out_uvs
-){
+Mesh* ModelLoader::loadObj(const std::string& path)
+{
 	printf("Loading OBJ file %s...\n", path.c_str());
+
+	std::vector<glm::vec3> out_vertices, out_normals;
+	std::vector<glm::vec2> out_uvs;
 
 	std::vector<unsigned int> vertexIndices, uvIndices, normalIndices;
 	std::vector<glm::vec3> temp_vertices;
-	std::vector<glm::vec2> temp_uvs;
 	std::vector<glm::vec3> temp_normals;
+	std::vector<glm::vec2> temp_uvs;
 
 
 	FILE * file = fopen(path.c_str(), "r");
 	if( file == NULL ){
 		printf("Impossible to open the file ! Are you in the right path ? See Tutorial 1 for details\n");
 		getchar();
-		return false;
+		return NULL;
 	}
 
 	while( 1 ){
@@ -64,7 +63,7 @@ bool ModelLoader::loadObj(
 			if (matches != 9){
 				printf("File can't be read by our simple parser :-( Try exporting with other options\n");
 				fclose(file);
-				return false;
+				return NULL;
 			}
 			vertexIndices.push_back(vertexIndex[0]);
 			vertexIndices.push_back(vertexIndex[1]);
@@ -100,8 +99,8 @@ bool ModelLoader::loadObj(
 		out_vertices.push_back(vertex);
 		out_uvs     .push_back(uv);
 		out_normals .push_back(normal);
-
 	}
 	fclose(file);
-	return true;
+
+	return new Mesh(out_vertices, out_normals, out_uvs);
 }
