@@ -1,7 +1,7 @@
 
 #include "Mesh.h"
 
-using antisocial::Mesh;
+using antisocial::graphics::Mesh;
 
 Mesh::Mesh()
     :   Drawable()

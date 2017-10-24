@@ -3,7 +3,7 @@
 
 #include <iostream>
 
-using antisocial::Texture2D;
+using antisocial::graphics::Texture2D;
 
 Texture2D::Texture2D(const std::string& texturePath)
 {

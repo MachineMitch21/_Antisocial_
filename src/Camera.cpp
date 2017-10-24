@@ -3,7 +3,7 @@
 
 #include <iostream>
 
-using antisocial::Camera;
+using antisocial::graphics::Camera;
 using namespace antisocial::input;
 
 Camera::Camera(float fov, float x, float y, float z, float aspectRatio, float nearClip, float farClip)

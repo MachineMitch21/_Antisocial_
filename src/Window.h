@@ -12,8 +12,8 @@
 
 using antisocial::Time;
 
-namespace antisocial {
-
+namespace antisocial
+{
 	class
 	#ifdef __WIN32__
 	ANTISOCIAL_API
@@ -97,7 +97,6 @@ namespace antisocial {
 	void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 	void window_iconify_callback(GLFWwindow* window, int iconified);
 	void error_callback(int error, const char* description);
-
 }
 
 #endif // WINDOW_H

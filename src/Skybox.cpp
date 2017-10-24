@@ -1,9 +1,7 @@
 
 #include "Skybox.h"
 
-using antisocial::Skybox;
-
-
+using antisocial::graphics::Skybox;
 
 Skybox::Skybox(std::string front, std::string back, std::string top, std::string bottom, std::string right, std::string left)
     :   Drawable(),
