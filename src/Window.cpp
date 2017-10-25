@@ -85,6 +85,11 @@ void Window::setIcon(const std::string path)
 #endif // __APPLE__
 }
 
+bool Window::isResized()
+{
+	return _isResized;
+}
+
 bool Window::isCursorActive()
 {
 	return _cursorActive;
@@ -127,6 +132,7 @@ void Window::setResizable(bool resizable)
 
 void Window::update()
 {
+	_isResized = false;
 	glfwSwapBuffers(_window);
 	glfwPollEvents();
 }
@@ -204,6 +210,9 @@ Window::~Window()
 void antisocial::framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
 	Window* win = (Window*)glfwGetWindowUserPointer(window);
+
+	win->_isResized = true;
+
 	win->_width = width;
 	win->_height = height;
 	glViewport(0, 0, width, height);
