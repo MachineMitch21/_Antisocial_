@@ -149,6 +149,7 @@ void Input::updateContext(GLFWwindow* window)
         glfwSetKeyCallback(window, key_callback);
         glfwSetMouseButtonCallback(window, mouse_button_callback);
         glfwSetCursorPosCallback(window, cursor_movement_callback);
+        glfwSetScrollCallback(window, scroll_callback);
     }
 }
 
@@ -164,5 +165,10 @@ void antisocial::input::mouse_button_callback(GLFWwindow* window, int button, in
 
 void antisocial::input::cursor_movement_callback(GLFWwindow* window, double xpos, double ypos)
 {
-    
+
+}
+
+void antisocial::input::scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
+{
+
 }

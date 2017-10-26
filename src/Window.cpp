@@ -194,7 +194,6 @@ bool Window::init()
 	glfwSetWindowUserPointer(_window, this);
 
 	glfwSetFramebufferSizeCallback(_window, framebuffer_size_callback);
-	glfwSetScrollCallback(_window, scroll_callback);
 	glfwSetWindowIconifyCallback(_window, window_iconify_callback);
 	glfwSetErrorCallback(error_callback);
 
@@ -216,11 +215,6 @@ void antisocial::framebuffer_size_callback(GLFWwindow* window, int width, int he
 	win->_width = width;
 	win->_height = height;
 	glViewport(0, 0, width, height);
-}
-
-void antisocial::scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
-{
-	Window* win = (Window*)glfwGetWindowUserPointer(window);
 }
 
 void antisocial::window_iconify_callback(GLFWwindow* window, int iconified)

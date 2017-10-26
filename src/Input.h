@@ -170,11 +170,13 @@ namespace antisocial
             friend void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
             friend void mouse_button_callback(GLFWwindow* window, int button, int action, int mods);
             friend void cursor_movement_callback(GLFWwindow* window, double xpos, double ypos);
+            friend void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
         };
 
         void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
         void mouse_button_callback(GLFWwindow* window, int button, int action, int mods);
         void cursor_movement_callback(GLFWwindow* window, double xpos, double ypos);
+        void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
     }
 }
 
