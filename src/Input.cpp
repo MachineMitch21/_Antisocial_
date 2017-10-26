@@ -135,11 +135,11 @@ bool Input::mouseButtonUp(MouseButton button)
     return buttonUpThisFrame;
 }
 
-glm::vec2 Input::getCurrentCursorPos()
+Vector2f Input::getCurrentCursorPos()
 {
     double xpos, ypos;
     glfwGetCursorPos(glfwGetCurrentContext(), &xpos, &ypos);
-    return glm::vec2((float)xpos, (float)ypos);
+    return Vector2f((float)xpos, (float)ypos);
 }
 
 void Input::updateContext(GLFWwindow* window)

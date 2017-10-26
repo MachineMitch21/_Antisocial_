@@ -10,7 +10,7 @@ Mesh::Mesh()
     init_vbo_map();
 }
 
-Mesh::Mesh(const std::vector<glm::vec3> vertices, const std::vector<glm::vec3> normals, const std::vector<glm::vec2> uvs)
+Mesh::Mesh(const std::vector<Vector3f> vertices, const std::vector<Vector3f> normals, const std::vector<Vector2f> uvs)
     :   Drawable()
 {
     glGenVertexArrays(1, &_vao);
@@ -30,35 +30,35 @@ void Mesh::draw()
     }
 }
 
-void Mesh::setVertices(const std::vector<glm::vec3> newVertices)
+void Mesh::setVertices(const std::vector<Vector3f> newVertices)
 {
     _vertices = newVertices;
 
     glBindVertexArray(_vao);
     glBindBuffer(GL_ARRAY_BUFFER, _vbos.at(VERTICES));
-    glBufferData(GL_ARRAY_BUFFER, _vertices.size() * sizeof(glm::vec3), &_vertices[0], GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, _vertices.size() * sizeof(Vector3f), &_vertices[0], GL_STATIC_DRAW);
     glEnableVertexAttribArray(VERTICES);
     glVertexAttribPointer(VERTICES, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
 }
 
-void Mesh::setNormals(const std::vector<glm::vec3> newNormals)
+void Mesh::setNormals(const std::vector<Vector3f> newNormals)
 {
     _normals = newNormals;
 
     glBindVertexArray(_vao);
     glBindBuffer(GL_ARRAY_BUFFER, _vbos.at(NORMALS));
-    glBufferData(GL_ARRAY_BUFFER, _normals.size() * sizeof(glm::vec3), &_normals[0], GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, _normals.size() * sizeof(Vector3f), &_normals[0], GL_STATIC_DRAW);
     glEnableVertexAttribArray(NORMALS);
     glVertexAttribPointer(NORMALS, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
 }
 
-void Mesh::setUVs(const std::vector<glm::vec2> newUVs)
+void Mesh::setUVs(const std::vector<Vector2f> newUVs)
 {
     _uvs = newUVs;
 
     glBindVertexArray(_vao);
     glBindBuffer(GL_ARRAY_BUFFER, _vbos.at(UVS));
-    glBufferData(GL_ARRAY_BUFFER, _uvs.size() * sizeof(glm::vec2), &_uvs[0], GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, _uvs.size() * sizeof(Vector2f), &_uvs[0], GL_STATIC_DRAW);
     glEnableVertexAttribArray(UVS);
     glVertexAttribPointer(UVS, 2, GL_FLOAT, GL_FALSE, 0, (void*)0);
 }

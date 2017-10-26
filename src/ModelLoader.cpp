@@ -17,13 +17,13 @@ Mesh* ModelLoader::loadObj(const std::string& path)
 {
 	printf("Loading OBJ file %s...\n", path.c_str());
 
-	std::vector<glm::vec3> out_vertices, out_normals;
-	std::vector<glm::vec2> out_uvs;
+	std::vector<Vector3f> out_vertices, out_normals;
+	std::vector<Vector2f> out_uvs;
 
 	std::vector<unsigned int> vertexIndices, uvIndices, normalIndices;
-	std::vector<glm::vec3> temp_vertices;
-	std::vector<glm::vec3> temp_normals;
-	std::vector<glm::vec2> temp_uvs;
+	std::vector<Vector3f> temp_vertices;
+	std::vector<Vector3f> temp_normals;
+	std::vector<Vector2f> temp_uvs;
 
 
 	FILE * file = fopen(path.c_str(), "r");
@@ -44,16 +44,16 @@ Mesh* ModelLoader::loadObj(const std::string& path)
 		// else : parse lineHeader
 
 		if ( strcmp( lineHeader, "v" ) == 0 ){
-			glm::vec3 vertex;
+			Vector3f vertex;
 			fscanf(file, "%f %f %f\n", &vertex.x, &vertex.y, &vertex.z );
 			temp_vertices.push_back(vertex);
 		}else if ( strcmp( lineHeader, "vt" ) == 0 ){
-			glm::vec2 uv;
+			Vector2f uv;
 			fscanf(file, "%f %f\n", &uv.x, &uv.y );
 			uv.y = -uv.y; // Invert V coordinate since we will only use DDS texture, which are inverted. Remove if you want to use TGA or BMP loaders.
 			temp_uvs.push_back(uv);
 		}else if ( strcmp( lineHeader, "vn" ) == 0 ){
-			glm::vec3 normal;
+			Vector3f normal;
 			fscanf(file, "%f %f %f\n", &normal.x, &normal.y, &normal.z );
 			temp_normals.push_back(normal);
 		}else if ( strcmp( lineHeader, "f" ) == 0 ){
@@ -91,9 +91,9 @@ Mesh* ModelLoader::loadObj(const std::string& path)
 		unsigned int normalIndex = normalIndices[i];
 
 		// Get the attributes thanks to the index
-		glm::vec3 vertex = temp_vertices[ vertexIndex-1 ];
-		glm::vec2 uv = temp_uvs[ uvIndex-1 ];
-		glm::vec3 normal = temp_normals[ normalIndex-1 ];
+		Vector3f vertex = temp_vertices[ vertexIndex-1 ];
+		Vector2f uv = temp_uvs[ uvIndex-1 ];
+		Vector3f normal = temp_normals[ normalIndex-1 ];
 
 		// Put the attributes in buffers
 		out_vertices.push_back(vertex);
