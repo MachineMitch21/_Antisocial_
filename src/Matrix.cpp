@@ -57,6 +57,68 @@ Matrix::~Matrix()
 
 }
 
+GLfloat* Matrix::valueOf()
+{
+    // First Column
+    _elements[0]   = xp.x;
+    _elements[1]   = xp.y;
+    _elements[2]   = xp.z;
+    _elements[3]   = xp.w;
+
+    // Second Column
+    _elements[4]   = yp.x;
+    _elements[5]   = yp.y;
+    _elements[6]   = yp.z;
+    _elements[7]   = yp.w;
+
+    // Third Column
+    _elements[8]   = zp.x;
+    _elements[9]   = zp.y;
+    _elements[10]  = zp.z;
+    _elements[11]  = zp.w;
+
+    // Fourth Column
+    _elements[12]  = tp.x;
+    _elements[13]  = tp.y;
+    _elements[14]  = tp.z;
+    _elements[15]  = tp.w;
+
+    return _elements;
+}
+
+Matrix Matrix::perspective(float fov, float aspectRatio, float nearClip, float farClip)
+{
+    Matrix m = Matrix(1.0f);
+
+    float t     = tan(to_radians(fov / 2));
+    float f_n   = farClip - nearClip;
+
+    m.xp.x = 1.0f / (aspectRatio * t);
+    m.yp.y = 1.0f / t;
+    m.zp.z = -(farClip + nearClip) / f_n;
+    m.zp.w = -1.0f;
+    m.tp.z = (-2.0f * farClip * nearClip) / f_n;
+    m.tp.w = 0.0f;
+
+    return m;
+}
+
+Matrix Matrix::orthographic(float left, float right, float bottom, float top, float nearClip, float farClip)
+{
+    Matrix m = Matrix(1.0f);
+
+    float f_n = farClip - nearClip;
+
+    m.xp.x = 2 / (right - left);
+    m.yp.y = 2 / (top - bottom);
+    m.zp.z = -2 / (f_n);
+    m.tp.x = -(right + left) / (right - left);
+    m.tp.y = -(top + bottom) / (top - bottom);
+    m.tp.z = -(farClip + nearClip) / f_n;
+
+    return m;
+}
+
 void Matrix::translate(const Vector3f& v1)
 {
     tp.x += (v1.x * xp.x) + (v1.y * yp.x) + (v1.z * zp.x);

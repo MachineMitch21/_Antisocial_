@@ -6,7 +6,7 @@
 
 float to_radians(float degrees)
 {
-    return degrees * (180 / PI);
+    return degrees * (PI / 180);
 }
 
 #endif // __MATHUTILS_H__

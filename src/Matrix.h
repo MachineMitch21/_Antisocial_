@@ -4,7 +4,9 @@
 #include "AntisocialDLL.h"
 #include "Vector3f.h"
 #include "Vector4f.h"
+#include "MathUtils.h"
 
+#include <GL/glew.h>
 #include <vector>
 #include <iostream>
 #include <cmath>
@@ -32,6 +34,13 @@ namespace antisocial
                     float Ox, float Oy, float Oz, float Os);
             ~Matrix();
 
+            // Puts all the columns into a contiguous array in row-major order
+            GLfloat* valueOf();
+
+            // Projection methods
+            static Matrix perspective(float fov, float aspectRatio, float nearClip, float farClip);
+            static Matrix orthographic(float left, float right, float bottom, float top, float nearClip, float farClip);
+
             // Transformation methods
             void translate(const Vector3f& v1);
             void rotate(const Vector3f& v1, float angle);
@@ -58,6 +67,9 @@ namespace antisocial
             Vector4f yp;
             Vector4f zp;
             Vector4f tp;
+
+        private:
+            float _elements[16];
         };
     }
 }
