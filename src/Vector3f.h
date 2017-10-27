@@ -27,14 +27,13 @@ namespace antisocial
             static Vector3f cross(const Vector3f& v1, const Vector3f& v2);
             static Vector3f add(const Vector3f& v1, const Vector3f& v2);
             static Vector3f subtract(const Vector3f& v1, const Vector3f& v2);
+            static float dot(const Vector3f& v1, const Vector3f& v2);
 
             float magnitude() const;
-            float dot(const Vector3f& v);
             Vector3f scale(float scalar);
 
             static Vector3f Lerp(Vector3f v1, Vector3f v2, float t);
 
-            float operator*(const Vector3f& v);
             Vector3f operator*(float scalar);
             Vector3f& operator+=(const Vector3f& v);
             Vector3f operator-();

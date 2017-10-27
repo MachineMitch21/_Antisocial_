@@ -89,7 +89,7 @@ namespace antisocial
 
         Matrix Matrix::perspective(float fov, float aspectRatio, float nearClip, float farClip)
         {
-            Matrix m = Matrix(1.0f);
+            Matrix m(1.0f);
 
             float t     = tan(MathUtils::to_radians(fov / 2));
             float f_n   = farClip - nearClip;
@@ -106,7 +106,7 @@ namespace antisocial
 
         Matrix Matrix::orthographic(float left, float right, float bottom, float top, float nearClip, float farClip)
         {
-            Matrix m = Matrix(1.0f);
+            Matrix m(1.0f);
 
             float f_n = farClip - nearClip;
 
@@ -123,44 +123,46 @@ namespace antisocial
         Matrix Matrix::lookAt(const Vector3f& eye, const Vector3f& target, const Vector3f& up)
         {
             Vector3f zDir = eye - target;
-            Vector3f z = Vector3f::normalize(zDir);
-            Vector3f x = Vector3f::normalize(Vector3f::cross(up, z));
-            Vector3f y = Vector3f::cross(z, x);
+            Vector3f zAxis = Vector3f::normalize(zDir);
+            Vector3f xAxis = Vector3f::normalize(Vector3f::cross(up, zAxis));
+            Vector3f yAxis = Vector3f::normalize(Vector3f::cross(zAxis, xAxis));
 
-            Matrix orientation = {
-                Vector4f( x.x,  x.y,  x.z,  0.0f ),
-                Vector4f( y.x,  y.y,  y.z,  0.0f ),
-                Vector4f( z.x,  z.y,  z.z,  0.0f ),
-                Vector4f( 0.0f, 0.0f, 0.0f, 1.0f )
+            Matrix lookAt = {
+                Vector4f( xAxis.x,                    yAxis.x,                    zAxis.x,                    0.0f ),
+                Vector4f( xAxis.y,                    yAxis.y,                    zAxis.y,                    0.0f ),
+                Vector4f( xAxis.z,                    yAxis.z,                    zAxis.z,                    0.0f ),
+                Vector4f( -Vector3f::dot(xAxis, eye), -Vector3f::dot(yAxis, eye), -Vector3f::dot(zAxis, eye), 1.0f )
             };
 
-            Matrix translation = {
-                Vector4f( 1.0f,   0.0f,   0.0f,   0.0f ),
-                Vector4f( 0.0f,   1.0f,   0.0f,   0.0f ),
-                Vector4f( 0.0f,   0.0f,   1.0f,   0.0f ),
-                Vector4f( -eye.x, -eye.y, -eye.z, 1.0f )
-            };
-
-            return (orientation * translation);
+            return lookAt;
         }
 
-        void Matrix::translate(const Vector3f& v1)
+        Matrix Matrix::translate(Matrix& m, const Vector3f& v1)
         {
-            tp.x += (v1.x * xp.x) + (v1.y * yp.x) + (v1.z * zp.x);
-            tp.y += (v1.x * xp.y) + (v1.y * yp.y) + (v1.z * zp.y);
-            tp.z += (v1.x * xp.z) + (v1.y * yp.z) + (v1.z * zp.z);
-            tp.w += (v1.x * xp.w) + (v1.y * yp.w) + (v1.z * zp.w);
+            m = Matrix(1.0f);
+            
+            m.tp.x = v1.x;
+            m.tp.y = v1.y;
+            m.tp.z = v1.z;
+
+            return m;
         }
 
-        void Matrix::scale(const Vector3f& v1)
+        Matrix Matrix::scale(Matrix& m, const Vector3f& v1)
         {
-            xp.x = v1.x;
-            yp.y = v1.y;
-            zp.z = v1.z;
+            m = Matrix(1.0f);
+
+            m.xp.x = v1.x;
+            m.yp.y = v1.y;
+            m.zp.z = v1.z;
+
+            return m;
         }
 
-        void Matrix::rotate(const Vector3f& v1, float angle)
+        Matrix Matrix::rotate(Matrix& m, const Vector3f& v1, float angle)
         {
+            m = Matrix(1.0f);
+
             float x = v1.x;
             float y = v1.y;
             float z = v1.z;
@@ -172,9 +174,6 @@ namespace antisocial
             float tx    = t * x;
             float ty    = t * y;
             float tz    = t * z;
-            float txs   = tx * tx;
-            float tys   = ty * ty;
-            float tzs   = tz * tz;
             float txy   = tx * y;
             float txz   = tx * z;
             float tyz   = ty * z;
@@ -182,17 +181,27 @@ namespace antisocial
             float sy    = s * y;
             float sz    = s * z;
 
-            xp.x = txs + c;
-            xp.y = txy + sz;
-            xp.z = txz + sy;
+            m.xp.x = c + tx * x;
+            m.xp.y = txy + sz;
+            m.xp.z = txz - sy;
+            m.xp.w = 0.0f;
 
-            yp.x = txy - sz;
-            yp.y = tys + c;
-            yp.z = tyz + sx;
+            m.yp.x = txy - sz;
+            m.yp.y = c + ty * y;
+            m.yp.z = tyz + sx;
+            m.yp.w = 0.0f;
 
-            zp.x = txz + sy;
-            zp.y = tyz - sx;
-            zp.z = tzs + c;
+            m.zp.x = txz + sy;
+            m.zp.y = tyz - sx;
+            m.zp.z = c + tz * z;
+            m.zp.w = 0.0f;
+
+            m.tp.x = 0.0f;
+            m.tp.y = 0.0f;
+            m.tp.z = 0.0f;
+            m.tp.w = 1.0f;
+
+            return m;
         }
 
         //Operator overloads
@@ -230,7 +239,6 @@ namespace antisocial
         Matrix& Matrix::operator*=(const Matrix& m2)
         {
             *this = *this * m2;
-
             return *this;
         }
 

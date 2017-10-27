@@ -53,9 +53,9 @@ float Vector3f::magnitude() const
     return sqrt((x * x) + (y * y) + (z * z));
 }
 
-float Vector3f::dot(const Vector3f& v)
+float Vector3f::dot(const Vector3f& v1, const Vector3f& v2)
 {
-    return (x * v.x) + (y * v.y) + (z * v.z);
+    return (v1.x * v2.x) + (v1.y * v2.y) + (v1.z * v2.z);
 }
 
 
@@ -77,11 +77,6 @@ Vector3f Vector3f::scale(float scalar)
 Vector3f Vector3f::Lerp(Vector3f v1, Vector3f v2, float t)
 {
     return v1 * t + v2 * (1.0f - t);
-}
-
-float Vector3f::operator*(const Vector3f& v)
-{
-    return dot(v);
 }
 
 Vector3f Vector3f::operator*(float scalar)

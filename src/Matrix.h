@@ -42,9 +42,9 @@ namespace antisocial
             static Matrix lookAt(const Vector3f& eye, const Vector3f& target, const Vector3f& up);
 
             // Transformation methods
-            void translate(const Vector3f& v1);
-            void rotate(const Vector3f& v1, float angle);
-            void scale(const Vector3f& v1);
+            static Matrix translate(Matrix& m, const Vector3f& v1);
+            static Matrix rotate(Matrix& m, const Vector3f& v1, float angle);
+            static Matrix scale(Matrix& m, const Vector3f& v1);
             Matrix& transpose();
 
             //Operator overloads
