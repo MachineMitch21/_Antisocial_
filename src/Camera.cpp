@@ -8,11 +8,11 @@ using namespace antisocial::input;
 
 Camera::Camera(float fov, float x, float y, float z, float aspectRatio, float nearClip, float farClip)
     :   _fov(fov),
-        _position(glm::vec3(x, y, z)),
-        _rotation(glm::vec3(0.0f, 0.0f, 0.0f)),
-        _front(glm::vec3(0.0f, 0.0f, -1.0f)),
-        _up(glm::vec3(0.0f, 1.0f, 0.0f)),
-        _worldUp(glm::vec3(0.0f, 1.0f, 0.0f)),
+        _position(Vector3f(x, y, z)),
+        _rotation(Vector3f(0.0f, 0.0f, 0.0f)),
+        _front(Vector3f(0.0f, 0.0f, -1.0f)),
+        _up(Vector3f(0.0f, 1.0f, 0.0f)),
+        _worldUp(Vector3f(0.0f, 1.0f, 0.0f)),
         _aspectRatio(aspectRatio),
         _nearClip(nearClip),
         _farClip(farClip),
@@ -28,9 +28,9 @@ Camera::~Camera()
 
 }
 
-glm::mat4 Camera::getViewMatrix()
+Matrix Camera::getViewMatrix()
 {
-    return glm::lookAt(_position, _position + _front, _up);
+    return Matrix::lookAt(_position, _position + _front, _up);
 }
 
 void Camera::setFOV(float fov)
@@ -73,7 +73,7 @@ float Camera::getFarClip()
     return _farClip;
 }
 
-void Camera::move(glm::vec3 direction, float speedMultiplier, float xOffset, float yOffset, float deltaTime, bool constrain)
+void Camera::move(Vector3f direction, float speedMultiplier, float xOffset, float yOffset, float deltaTime, bool constrain)
 {
     float velocity = (_movementSpeed * speedMultiplier) * deltaTime;
     _position += direction * velocity;
@@ -96,13 +96,13 @@ void Camera::move(glm::vec3 direction, float speedMultiplier, float xOffset, flo
         }
     }
 
-    glm::vec3 front;
+    Vector3f front;
 
-    front.x = cos(glm::radians(_yaw)) * cos(glm::radians(_pitch));
-    front.y = sin(glm::radians(_pitch));
-    front.z = sin(glm::radians(_yaw)) * cos(glm::radians(_pitch));
-    _front  = glm::normalize(front);
+    front.x = cos(MathUtils::to_radians(_yaw)) * cos(MathUtils::to_radians(_pitch));
+    front.y = sin(MathUtils::to_radians(_pitch));
+    front.z = sin(MathUtils::to_radians(_yaw)) * cos(MathUtils::to_radians(_pitch));
+    _front  = Vector3f::normalize(front);
 
-    _right  = glm::normalize(glm::cross(_front, _worldUp));
-    _up     = glm::normalize(glm::cross(_right, _front));
+    _right  = Vector3f::normalize(Vector3f::cross(_front, _worldUp));
+    _up     = Vector3f::normalize(Vector3f::cross(_right, _front));
 }

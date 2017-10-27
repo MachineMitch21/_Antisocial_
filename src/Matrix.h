@@ -6,7 +6,6 @@
 #include "Vector4f.h"
 #include "MathUtils.h"
 
-#include <GL/glew.h>
 #include <vector>
 #include <iostream>
 #include <cmath>
@@ -35,11 +34,12 @@ namespace antisocial
             ~Matrix();
 
             // Puts all the columns into a contiguous array in row-major order
-            GLfloat* valueOf();
+            float* valueOf();
 
             // Projection methods
             static Matrix perspective(float fov, float aspectRatio, float nearClip, float farClip);
             static Matrix orthographic(float left, float right, float bottom, float top, float nearClip, float farClip);
+            static Matrix lookAt(const Vector3f& eye, const Vector3f& target, const Vector3f& up);
 
             // Transformation methods
             void translate(const Vector3f& v1);
