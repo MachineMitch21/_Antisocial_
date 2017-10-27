@@ -51,6 +51,7 @@ namespace antisocial
 
             //Operator overloads
             friend Matrix operator*(Matrix m1, const Matrix& m2);
+            Vector4f operator*(const Vector4f& v);
             Matrix& operator*=(const Matrix& m2);
             Matrix& operator+=(const Matrix& m2);
             Matrix operator+(const Matrix& m2);

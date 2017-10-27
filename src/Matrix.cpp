@@ -139,17 +139,19 @@ namespace antisocial
 
         Matrix Matrix::translate(Matrix& m, const Vector3f& v1)
         {
-            m.tp.x += v1.x;
-            m.tp.y += v1.y;
-            m.tp.z += v1.z;
+            Vector4f translation(v1.x, v1.y, v1.z, 1.0f);
+            Vector4f product = m * translation;
+
+            m.tp.x = product.x;
+            m.tp.y = product.y;
+            m.tp.z = product.z;
+            m.tp.w = product.w;
 
             return m;
         }
 
         Matrix Matrix::scale(Matrix& m, const Vector3f& v1)
         {
-            m = Matrix(1.0f);
-
             m.xp.x = v1.x;
             m.yp.y = v1.y;
             m.zp.z = v1.z;
@@ -159,8 +161,6 @@ namespace antisocial
 
         Matrix Matrix::rotate(Matrix& m, const Vector3f& v1, float angle)
         {
-            m = Matrix(1.0f);
-
             float x = v1.x;
             float y = v1.y;
             float z = v1.z;
@@ -182,21 +182,15 @@ namespace antisocial
             m.xp.x = c + tx * x;
             m.xp.y = txy + sz;
             m.xp.z = txz - sy;
-            m.xp.w = 0.0f;
 
             m.yp.x = txy - sz;
             m.yp.y = c + ty * y;
             m.yp.z = tyz + sx;
-            m.yp.w = 0.0f;
 
             m.zp.x = txz + sy;
             m.zp.y = tyz - sx;
             m.zp.z = c + tz * z;
-            m.zp.w = 0.0f;
 
-            m.tp.x = 0.0f;
-            m.tp.y = 0.0f;
-            m.tp.z = 0.0f;
             m.tp.w = 1.0f;
 
             return m;
@@ -239,6 +233,18 @@ namespace antisocial
             return m1.multiply(m2);
         }
 
+        Vector4f Matrix::operator*(const Vector4f& v)
+        {
+            Vector4f temp;
+
+            temp.x = this->xp.x * v.x + this->yp.x * v.y + this->zp.x * v.z + this->tp.x * v.w;
+            temp.y = this->xp.y * v.x + this->yp.y * v.y + this->zp.y * v.z + this->tp.y * v.w;
+            temp.z = this->xp.z * v.x + this->yp.z * v.y + this->zp.z * v.z + this->tp.z * v.w;
+            temp.w = this->xp.w * v.x + this->yp.w * v.y + this->zp.w * v.z + this->tp.w * v.w;
+
+            return temp;
+        }
+
         Matrix& Matrix::operator*=(const Matrix& m2)
         {
             return multiply(m2);
@@ -247,11 +253,11 @@ namespace antisocial
         Matrix Matrix::operator+(const Matrix& m2)
         {
             Matrix temp(1.0f);
+
             temp.xp = this->xp + m2.xp;
             temp.yp = this->yp + m2.yp;
             temp.zp = this->zp + m2.zp;
             temp.tp = this->tp + m2.tp;
-
 
             return temp;
         }
