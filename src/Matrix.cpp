@@ -139,11 +139,9 @@ namespace antisocial
 
         Matrix Matrix::translate(Matrix& m, const Vector3f& v1)
         {
-            m = Matrix(1.0f);
-            
-            m.tp.x = v1.x;
-            m.tp.y = v1.y;
-            m.tp.z = v1.z;
+            m.tp.x += v1.x;
+            m.tp.y += v1.y;
+            m.tp.z += v1.z;
 
             return m;
         }
@@ -204,11 +202,9 @@ namespace antisocial
             return m;
         }
 
-        //Operator overloads
-
-        Matrix Matrix::operator*(const Matrix& m2)
+        Matrix& Matrix::multiply(const Matrix& m2)
         {
-            Matrix temp;
+            Matrix temp(1.0f);
             // First Column
             temp.xp.x = xp.x * m2.xp.x + yp.x * m2.xp.y + zp.x * m2.xp.z + tp.x * m2.xp.w;
             temp.xp.y = xp.y * m2.xp.x + yp.y * m2.xp.y + zp.y * m2.xp.z + tp.y * m2.xp.w;
@@ -233,18 +229,24 @@ namespace antisocial
             temp.tp.z = xp.z * m2.tp.x + yp.z * m2.tp.y + zp.z * m2.tp.z + tp.z * m2.tp.w;
             temp.tp.w = xp.w * m2.tp.x + yp.w * m2.tp.y + zp.w * m2.tp.z + tp.w * m2.tp.w;
 
-            return temp;
+            *this = temp;
+            return *this;
+        }
+
+        //Operator overloads
+        Matrix operator*(Matrix m1, const Matrix& m2)
+        {
+            return m1.multiply(m2);
         }
 
         Matrix& Matrix::operator*=(const Matrix& m2)
         {
-            *this = *this * m2;
-            return *this;
+            return multiply(m2);
         }
 
         Matrix Matrix::operator+(const Matrix& m2)
         {
-            Matrix temp;
+            Matrix temp(1.0f);
             temp.xp = this->xp + m2.xp;
             temp.yp = this->yp + m2.yp;
             temp.zp = this->zp + m2.zp;
