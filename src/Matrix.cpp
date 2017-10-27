@@ -110,6 +110,43 @@ void Matrix::rotate(const Vector3f& v1, float angle)
 
 //Operator overloads
 
+Matrix Matrix::operator*(const Matrix& m2)
+{
+    Matrix temp;
+    // First Column
+    temp.xp.x = xp.x * m2.xp.x + yp.x * m2.xp.y + zp.x * m2.xp.z + tp.x * m2.xp.w;
+    temp.xp.y = xp.y * m2.xp.x + yp.y * m2.xp.y + zp.y * m2.xp.z + tp.y * m2.xp.w;
+    temp.xp.z = xp.z * m2.xp.x + yp.z * m2.xp.y + zp.z * m2.xp.z + tp.z * m2.xp.w;
+    temp.xp.w = xp.w * m2.xp.x + yp.w * m2.xp.y + zp.w * m2.xp.z + tp.w * m2.xp.w;
+
+    // Second Column
+    temp.yp.x = xp.x * m2.yp.x + yp.x * m2.yp.y + zp.x * m2.yp.z + tp.x * m2.yp.w;
+    temp.yp.y = xp.y * m2.yp.x + yp.y * m2.yp.y + zp.y * m2.yp.z + tp.y * m2.yp.w;
+    temp.yp.z = xp.z * m2.yp.x + yp.z * m2.yp.y + zp.z * m2.yp.z + tp.z * m2.yp.w;
+    temp.yp.w = xp.w * m2.yp.x + yp.w * m2.yp.y + zp.w * m2.yp.z + tp.w * m2.yp.w;
+
+    // Third Column
+    temp.zp.x = xp.x * m2.zp.x + yp.x * m2.zp.y + zp.x * m2.zp.z + tp.x * m2.zp.w;
+    temp.zp.y = xp.y * m2.zp.x + yp.y * m2.zp.y + zp.y * m2.zp.z + tp.y * m2.zp.w;
+    temp.zp.z = xp.z * m2.zp.x + yp.z * m2.zp.y + zp.z * m2.zp.z + tp.z * m2.zp.w;
+    temp.zp.w = xp.w * m2.zp.x + yp.w * m2.zp.y + zp.w * m2.zp.z + tp.w * m2.zp.w;
+
+    // Fourth Column
+    temp.tp.x = xp.x * m2.tp.x + yp.x * m2.tp.y + zp.x * m2.tp.z + tp.x * m2.tp.w;
+    temp.tp.y = xp.y * m2.tp.x + yp.y * m2.tp.y + zp.y * m2.tp.z + tp.y * m2.tp.w;
+    temp.tp.z = xp.z * m2.tp.x + yp.z * m2.tp.y + zp.z * m2.tp.z + tp.z * m2.tp.w;
+    temp.tp.w = xp.w * m2.tp.x + yp.w * m2.tp.y + zp.w * m2.tp.z + tp.w * m2.tp.w;
+
+    return temp;
+}
+
+Matrix& Matrix::operator*=(const Matrix& m2)
+{
+    *this = *this * m2;
+
+    return *this;
+}
+
 Matrix Matrix::operator+(const Matrix& m2)
 {
     Matrix temp;
@@ -134,10 +171,5 @@ Matrix& Matrix::operator+=(const Matrix& m2)
 
 bool Matrix::operator==(const Matrix& m2)
 {
-    if(this->xp == m2.xp && this->yp == m2.yp && this->zp == m2.zp && this->tp == m2.tp)
-    {
-        return true;
-    }else{
-        return false;
-    }
+    return (this->xp == m2.xp && this->yp == m2.yp && this->zp == m2.zp && this->tp == m2.tp);
 }
